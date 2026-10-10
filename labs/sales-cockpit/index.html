@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>STELE Lab — simulated sales-cockpit UI study</title>
+<meta name="description" content="A fictional dashboard UI study using synthetic local data to demonstrate a residential-project sales cockpit. No live inventory, buyer profiles, pricing or CRM integration exists.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17191B">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mono">A</span><div><b>STELE <em>PULSE</em></b><small>Sales-cockpit UI study · simulated data</small></div></div>
+  <span class="live"><i></i> demo · Koncepcja STELE</span>
+  <a class="back" href="/">← wróć do koncepcji STELE</a>
+</header>
+
+<div class="wrap">
+  <div class="demo-note"><b>Laboratorium: demo koncepcyjne.</b> Wątek <b style="color:var(--gold)">„TY"</b> podsumowuje lokalne interakcje zapisane w tej przeglądarce. Pozostałe profile, zdarzenia, wyniki i wykresy są syntetycznymi danymi demonstracyjnymi. To mockup interfejsu — bez prawdziwych klientów, inventory, cennika, predykcji sprzedaży ani połączenia z CRM.</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v" id="kVis">-</div><div class="l">zdarzeń przykładowych</div><div class="d up">wartość demonstracyjna</div></div>
+    <div class="kpi"><div class="v" id="kAct">-</div><div class="l">sesji / interakcji demo</div><div class="d up">liczone lokalnie</div></div>
+    <div class="kpi"><div class="v" id="kHot">-</div><div class="l">profile przykładowe</div><div class="d warn">bez prawdziwych leadów</div></div>
+    <div class="kpi"><div class="v">DEMO</div><div class="l">prognoza nie dostępna</div><div class="d up">dane symulowane</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- HEATMAPA -->
+    <div class="card">
+      <div class="ch"><b>Mapa schematyczna interakcji</b><small>dane syntetyczne</small></div>
+      <div class="cb" style="padding-bottom:6px"><canvas id="heat" width="620" height="760"></canvas></div>
+      <div class="heat-legend">
+        <span><i style="background:#E4574B"></i>wysoki indeks demo</span>
+        <span><i style="background:#A6957A"></i>średni indeks demo</span>
+        <span><i style="background:#5B7C99"></i>niski indeks demo</span>
+        <span><i style="background:#2a2d36"></i>osłabiony sygnał demo</span>
+      </div>
+    </div>
+
+    <!-- FEED + AI -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card">
+        <div class="ch"><b>Strumień zdarzeń demo</b><small>lokalna historia + symulacja</small></div>
+        <div class="feed" id="feed"></div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>Reguły demonstracyjne</b><small>Sygnały przykładowe</small></div>
+        <div id="recos"></div>
+      </div>
+    </div>
+
+    <!-- LEADY + CENY -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card">
+        <div class="ch"><b>Profile przykładowe</b><small>waga interakcji demo</small></div>
+        <div class="cb" id="leads"></div>
+      </div>
+      <div class="card">
+        <div class="ch"><b>Sygnały wykresu demo</b><small>brak danych cenowych</small></div>
+        <div id="sigs"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pitch">
+    <div>
+      <h2>Studium interfejsu analitycznego.<br><span style="color:var(--gold)">Zdarzenia stają się narracją.</span></h2>
+      <p>Ta demonstracja pokazuje, jak aplikacja mogłaby zestawiać lokalne zdarzenia UI i syntetyczne profile w jednym dashboardzie. Nie ocenia prawdziwych kupujących, nie przewiduje popytu ani cen i nie łączy się z żadnym CRM. Produkt rzeczywisty wymagałby świadomej podstawy przetwarzania, przejrzystej polityki prywatności, zaufanego backendu oraz walidacji modelu.</p>
+    </div>
+    <a class="abtn gold" href="/">Wróć do koncepcji STELE</a>
+  </div>
+</div>
+
+<div class="toast" id="toast">Akcja demonstracyjna — nic nie zostało wysłane.</div>
+
+<footer>STELE · studium interfejsu analitycznego (lab) — demo koncepcyjne. Cały dashboard i wszystkie rekordy są demonstracyjne; integracji CRM ani prawdziwych leadów nie ma.</footer>
+<script type="module" src="/src/labs/sales-cockpit/main.js"></script>
+</body>
+</html>

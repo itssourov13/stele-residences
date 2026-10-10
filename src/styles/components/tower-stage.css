@@ -1,0 +1,136 @@
+/* Tower stage, lobby gate, Ines bubble, finder panel, flight zone. Ported from the supplied source; tokens come from tokens.css. */
+/* ===== wieża 3D / apartment finder ===== */
+.tower{padding:clamp(70px,12vh,160px) var(--gutter)}
+.tower .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;margin-bottom:36px}
+.tower .head h2{font-size:clamp(32px,5vw,64px);max-width:16ch}
+.tower .head p{color:var(--text-2);max-width:40ch;font-size:15px}
+.twrap{display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(18px,2.6vw,36px);align-items:stretch}
+@media(max-width:980px){.twrap{grid-template-columns:1fr}}
+.tstage{position:relative;height:min(78vh,760px);border:1px solid var(--border);background:
+  radial-gradient(90% 80% at 50% 30%,rgba(23,26,33,.9),rgba(10,11,14,.6) 70%),linear-gradient(180deg,#0d0f14,#0A0B0E)}
+#tower3d{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+#tower3d:active{cursor:grabbing}
+/* reprezentacyjna brama do recepcji - wyśrodkowana, szkło+złoto, w stylu strony */
+.lobby-enter{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:8;
+  display:inline-flex;align-items:center;gap:14px;padding:11px 20px 11px 12px;text-align:left;cursor:pointer;
+  background:linear-gradient(135deg,rgba(16,18,22,.84),rgba(11,12,16,.66));border:1px solid rgba(166,149,122,.55);border-radius:999px;color:var(--accent-hi);font-family:var(--font-text);
+  box-shadow:0 12px 44px -14px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.05);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);
+  transition:transform .4s var(--ease-soft),border-color .4s var(--ease-soft),box-shadow .4s var(--ease-soft)}
+.lobby-enter[hidden]{display:none}
+.lobby-enter::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1px;pointer-events:none;opacity:.9;
+  background:linear-gradient(135deg,rgba(216,204,180,.75),rgba(166,149,122,0) 48%,rgba(166,149,122,.55));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.lobby-enter .le-ico{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;color:var(--accent);
+  border:1px solid rgba(166,149,122,.5);background:radial-gradient(circle at 34% 28%,rgba(166,149,122,.24),rgba(166,149,122,.04));transition:background .4s var(--ease-soft)}
+.lobby-enter .le-ico svg{width:19px;height:19px}
+.lobby-enter .le-body{display:flex;flex-direction:column;gap:3px;line-height:1}
+.lobby-enter .le-eyebrow{font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.lobby-enter .le-txt{font-family:var(--font-display);font-weight:600;font-size:17px;letter-spacing:.015em;color:var(--text)}
+.lobby-enter .le-arr{flex:none;display:grid;place-items:center;width:20px;height:20px;color:var(--accent);transition:transform .4s var(--ease-soft)}
+.lobby-enter .le-arr svg{width:18px;height:18px}
+.lobby-enter:hover{transform:translateX(-50%) translateY(-3px);border-color:rgba(216,204,180,.85);
+  box-shadow:0 20px 58px -16px rgba(0,0,0,.82),0 0 30px -6px rgba(166,149,122,.42),inset 0 1px 0 rgba(255,255,255,.08)}
+.lobby-enter:hover .le-arr{transform:translateX(4px)}
+.lobby-enter:hover .le-ico{background:radial-gradient(circle at 34% 28%,rgba(166,149,122,.42),rgba(166,149,122,.08))}
+@keyframes leInvite{0%,100%{box-shadow:0 12px 44px -14px rgba(0,0,0,.75),0 0 0 0 rgba(166,149,122,0),inset 0 1px 0 rgba(255,255,255,.05)}50%{box-shadow:0 12px 44px -14px rgba(0,0,0,.75),0 0 26px -6px rgba(166,149,122,.34),inset 0 1px 0 rgba(255,255,255,.05)}}
+.lobby-enter:not(:hover){animation:leInvite 3.6s var(--ease-soft) infinite}
+@media (max-width:560px){.lobby-enter{bottom:14px;gap:10px;padding:9px 16px 9px 10px}.lobby-enter .le-ico{width:32px;height:32px}.lobby-enter .le-txt{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.lobby-enter:not(:hover){animation:none}.lobby-enter,.lobby-enter .le-arr,.lobby-enter .le-ico{transition:none}}
+.lobby-exit{position:absolute;top:92px;right:18px;z-index:9;display:none;background:rgba(10,11,14,.72);border:1px solid rgba(166,149,122,.45);color:var(--text);font:500 11px/1 var(--font-text);letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;border-radius:999px;cursor:pointer;backdrop-filter:blur(8px)}
+body.inlobby .lobby-exit{display:block}
+body.inlobby .tpanel,body.inlobby .daynight,body.inlobby .tbadge,body.inlobby .thint,body.inlobby .lobby-enter,body.inlobby .fcap,body.inlobby .tower .head,body.inlobby .snd-btn{display:none!important}
+.lobby-fade{position:absolute;inset:0;background:#060607;opacity:0;pointer-events:none;transition:opacity .6s ease;z-index:8}
+.lobby-fade.on{opacity:1}
+.snd-btn{position:absolute;left:18px;bottom:58px;z-index:8;width:38px;height:38px;border-radius:50%;border:1px solid rgba(166,149,122,.4);background:rgba(10,11,14,.6);backdrop-filter:blur(8px);font-size:15px;cursor:pointer;color:var(--text)}
+.con-bubble{position:absolute;left:clamp(16px,4vw,56px);bottom:clamp(18px,6vh,64px);z-index:9;max-width:340px;background:rgba(10,11,14,.78);border:1px solid rgba(166,149,122,.4);border-radius:14px;padding:16px 18px;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.con-vid-hidden{position:fixed;left:0;bottom:0;width:2px;height:2px;opacity:.01;pointer-events:none;z-index:-1}  /* element źródłowy dla tekstury 3D + audio - Ines mówi ZZA biurka, nie z okienka */
+.con-bubble .ab-name{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:8px}.con-avatar{display:block;flex:0 0 auto;width:32px;height:42px;object-fit:cover;border-radius:18px 18px 9px 9px;border:1px solid rgba(166,149,122,.45);background:#d8c8ad}.con-avatar__name{display:block}.con-avatar__name span{letter-spacing:.08em}
+.con-bubble p{margin:0 0 12px;font-size:13.5px;line-height:1.55;color:var(--text);min-height:3em}
+.con-bubble .btn{font-size:11px;padding:10px 16px}
+.tstage .tlo{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:rgba(10,11,14,.72);backdrop-filter:blur(4px);transition:opacity .7s var(--ease-soft)}
+.tstage .tlo.off{opacity:0;pointer-events:none;visibility:hidden}
+.tstage .tlo.off i{display:none;animation:none}   /* spinner animowany tworzył własną warstwę ignorującą opacity:0 rodzica -> ring nad Ines; twardo gasimy po załadowaniu */
+.tstage .tlo .tmark{font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.42em;padding-left:.42em;color:var(--accent-hi)}
+.tstage .tlo i{width:34px;height:34px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tstage .thint{position:absolute;left:14px;top:12px;z-index:2;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);opacity:.6}
+.tstage .tbadge{position:absolute;left:18px;bottom:16px;z-index:2;pointer-events:none;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.tstage .tbadge b{display:block;font-family:var(--font-display);font-weight:600;font-size:clamp(20px,2.6vw,30px);letter-spacing:.02em;color:var(--text);text-transform:none}
+.daynight{position:absolute;right:16px;bottom:16px;z-index:4;display:flex;align-items:center;gap:10px;background:rgba(12,13,17,.66);border:1px solid var(--border);border-radius:40px;padding:8px 14px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.daynight svg{width:16px;height:16px;stroke:var(--accent-hi);fill:none;stroke-width:1.6;flex:none}
+.daynight input{width:min(140px,26vw);accent-color:var(--accent)}
+/* Kontrolki muszą mieć rozłączne obszary dotyku na telefonie i tablecie. */
+@media(max-width:980px){
+  .tstage .lobby-enter{bottom:76px;max-width:calc(100% - 24px)}
+  .tstage .snd-btn{bottom:16px;left:14px}
+  .tstage .daynight{bottom:16px;right:14px;min-height:44px}
+  .tstage .tbadge{bottom:144px;left:14px}
+}
+.webgpu-chip{position:absolute;right:16px;top:12px;z-index:2;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-soft);border-radius:30px;padding:4px 10px;background:rgba(12,13,17,.5)}
+/* panel finder */
+.tpanel{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));display:flex;flex-direction:column;height:min(78vh,760px);min-height:0}
+.tpanel .tp-head{padding:20px 22px 14px;border-bottom:1px solid var(--border)}
+.tpanel .tp-head .cnt{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,2.6vw,34px);line-height:1.1}
+.tpanel .tp-head .cnt b{color:var(--accent);font-weight:700}
+.tpanel .tp-head small{color:var(--text-2);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+.tfilters{display:flex;flex-wrap:wrap;gap:8px;padding:14px 22px;border-bottom:1px solid var(--border)}
+.tfilters .fbtn{font:inherit;font-size:11.5px;letter-spacing:.08em;color:var(--text-2);background:none;border:1px solid var(--border);border-radius:30px;padding:7px 14px;cursor:pointer;transition:.25s}
+.tfilters .fbtn:hover{color:var(--text);border-color:rgba(242,238,230,.3)}
+.tfilters .fbtn.act{background:var(--accent);border-color:var(--accent);color:#0a0a0a;font-weight:600}
+.ulist{flex:1;min-height:0;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.ucard{display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:center;border:1px solid var(--border);padding:12px 14px;cursor:pointer;transition:.25s var(--ease-soft);background:rgba(255,255,255,.01)}
+.ucard:hover{border-color:rgba(166,149,122,.55);background:var(--accent-soft);transform:translateX(3px)}
+.ucard .uid{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--accent-hi)}
+.ucard .um{font-size:12px;color:var(--text-2);letter-spacing:.04em}
+.ucard .up{font-weight:600;font-size:14px;color:var(--text);text-align:right}
+.ucard .ust{grid-column:3;font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-align:right}
+.ucard .ust.free{color:#69c778}.ucard .ust.res{color:var(--accent)}.ucard .ust.sold{color:#8E8A80}
+.ucard.sold{opacity:.45;cursor:default}
+.ucard.sold:hover{transform:none;background:rgba(255,255,255,.01);border-color:var(--border)}
+.tp-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.tp-foot .legend{display:flex;gap:14px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2)}
+.tp-foot .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.tp-foot .btn{padding:12px 22px;font-size:12.5px}
+
+/* ===== v2: przelot kamery (sticky flight) ===== */
+.flightzone{position:relative;--sky-ink:var(--text);--sky-muted:var(--text-2);--sky-glow:0 4px 30px rgba(0,0,0,.6)}
+@media (hover:hover) and (min-width:981px){
+  /* napisy nad sceną 3D zmieniają kolor wg pory dnia (suwak): ciemne w dzień (jasne niebo) -> jasne w nocy. Sterowane w applyDay(). */
+  .flightzone .tower .head h2{color:var(--sky-ink);text-shadow:var(--sky-glow);transition:color .2s linear,text-shadow .2s linear}
+  .flightzone .tower .head p{color:var(--sky-muted);transition:color .2s linear}
+  .flightzone .thint{color:var(--sky-muted);transition:color .2s linear}
+  .flightzone .tbadge{color:var(--sky-muted);transition:color .2s linear}
+  .flightzone .tbadge b{color:var(--sky-ink);text-shadow:var(--sky-glow);transition:color .2s linear,text-shadow .2s linear}
+  .flightzone .fcap b{color:var(--sky-ink);text-shadow:var(--sky-glow);transition:color .2s linear,text-shadow .2s linear}
+  .flightzone{height:340vh}
+  .flightzone .flightsticky{position:sticky;top:0;height:100svh;overflow:hidden}
+  .flightzone .tower{padding:0;height:100svh}
+  /* nagłówek sekcji pojawia się dopiero po wylądowaniu kamery */
+  .flightzone .tower .head{position:absolute;top:clamp(74px,9vh,120px);left:var(--gutter);right:var(--gutter);z-index:6;margin-bottom:0;opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease-soft),transform .7s var(--ease-soft);pointer-events:none}
+  .flightzone.settled .tower .head{opacity:1;transform:none;pointer-events:none}
+  /* scena full-bleed */
+  .flightzone .twrap{display:block;position:relative;height:100svh}
+  .flightzone .tstage{height:100svh;border:0;background:radial-gradient(90% 80% at 50% 34%,rgba(23,26,33,.55),transparent 72%)}
+  /* panel finderowy = szklany overlay z prawej, wjeżdża po przelocie */
+  .flightzone .tpanel{position:absolute;right:clamp(16px,3vw,48px);top:53%;height:min(70vh,680px);width:min(396px,34vw);z-index:7;
+    background:rgba(12,14,19,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--border);
+    opacity:0;transform:translate(46px,-50%);transition:opacity .7s var(--ease-soft),transform .7s var(--ease-soft)}
+  .flightzone.settled .tpanel{opacity:1;transform:translate(0,-50%)}
+  /* kontrolki w trybie kinowym */
+  .flightzone .thint{top:auto;bottom:92px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .5s var(--ease-soft)}
+  .flightzone .tbadge{left:20px;bottom:76px}
+  /* suwak pory dnia DOSTĘPNY PRZEZ CAŁY przelot (nie tylko po settled) */
+  .flightzone .daynight{right:auto;left:20px;bottom:18px;opacity:1;pointer-events:auto;z-index:9;transition:opacity .5s var(--ease-soft)}
+  .flightzone.settled .thint{opacity:1}
+  .flightzone .webgpu-chip{top:auto;bottom:20px;right:20px}
+}
+.fcap{position:absolute;left:clamp(26px,6vw,110px);bottom:16%;z-index:5;max-width:20ch;opacity:0;transform:translateY(26px);pointer-events:none}
+.fcap b{display:block;font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.2vw,52px);line-height:1.08;color:var(--text);text-shadow:0 4px 30px rgba(0,0,0,.6)}
+.fcap span{display:block;margin-top:10px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+.fcap.c2{left:auto;right:clamp(26px,6vw,110px);text-align:right}
+.fcap.c3{bottom:auto;top:16%}
+@media (hover:none),(max-width:980px){.fcap{display:none}}
+/* ===== v2: wideo-karty w bento ===== */
+.bento .cell video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .55s var(--ease-soft)}
+.bento .cell.playing video{opacity:1}

@@ -1,0 +1,62 @@
+/**
+ * STELE design tokens. Single source for colour, type, space, shape, depth, motion and layering.
+ * Palette: graphite (night), smoked glass (surfaces), warm ivory (light sections), mineral stone, pewter-bronze accent.
+ * Mirror of motion values lives in src/motion/tokens.js.
+ */
+:root{
+  /* colour: dark (default) */
+  --bg:#17191B;                    /* graphite */
+  --surface:#1F2326;               /* smoked glass */
+  --surface-2:#292E32;             /* elevated */
+  --text:#ECE8DF;                  /* warm ivory */
+  --text-2:#A3A39C;                /* stone grey */
+  --accent:#A6957A;                /* pewter-bronze */
+  --accent-hi:#D8CCB4;
+  --accent-soft:rgba(166,149,122,.14);
+  --accent-rgb:166,149,122;
+  --border:rgba(236,232,223,.12);
+  --border-strong:rgba(236,232,223,.3);
+  --scrim:rgba(23,25,27,.72);
+  /* colour: light tones (ivory = warm paper, stone = mineral) */
+  --ivory:#EEEAE1; --ivory-2:#E2DDD1;
+  --stone:#CFCABD;
+  --ink:#1B1D1F; --ink-2:#585B5D; --ink-border:rgba(27,29,31,.16); --ink-accent:#6F6048;
+  /* time-of-day variables (set by the 3D scene's day/night slider; defaults for no-3D) */
+  --sky-ink:var(--text); --sky-muted:var(--text-2); --sky-glow:rgba(166,149,122,.35);
+
+  /* type */
+  --font-display:"Newsreader Variable",Georgia,"Times New Roman",serif;
+  --font-text:"Instrument Sans Variable",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-hero:clamp(3.2rem,7.6vw,8.8rem);
+  --fs-h2:clamp(2.2rem,5vw,5rem);
+  --fs-h3:clamp(1.6rem,2.8vw,2.7rem);
+  --fs-lede:clamp(1.05rem,1.3vw,1.3rem);
+  --fs-body:1rem;
+  --fs-small:.8125rem;
+  --fs-mono:.75rem;
+  --lh-tight:1.02; --lh-body:1.65;
+  --track-mono:.08em;
+
+  /* space (4px base, fluid at the top) */
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.5rem; --space-6:2rem;
+  --space-7:3rem; --space-8:5rem; --space-9:clamp(5rem,12vh,9rem); --space-10:clamp(6rem,18vh,14rem);
+  --gutter:clamp(20px,5vw,84px);
+  --container:1680px;
+  --header-h:76px;
+
+  /* shape + depth */
+  --radius-0:0; --radius-1:2px; --radius-2:6px; --radius-pill:999px;
+  --shadow-1:0 1px 0 rgba(0,0,0,.2);
+  --shadow-2:0 18px 50px -18px rgba(0,0,0,.55);
+  --shadow-3:0 40px 90px -30px rgba(0,0,0,.65);
+
+  /* motion */
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-soft:cubic-bezier(.22,.61,.36,1);
+  --ease-in-out:cubic-bezier(.76,0,.24,1);
+  --dur-fast:.35s; --dur-base:.9s; --dur-slow:1.4s;
+
+  /* layers */
+  --z-base:1; --z-rail:40; --z-menu:90; --z-header:100; --z-overlay:150; --z-chat:160; --z-cursor:190; --z-preloader:200;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "stele-residences",
+  "version": "1.0.0",
+  "private": true,
+  "description": "STELE Residences - cinematic luxury residential tower website (Vite, GSAP, Lenis, three.js)",
+  "type": "module",
+  "engines": { "node": ">=20.19.0" },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "^5.2.0",
+    "@fontsource-variable/newsreader": "^5.2.0",
+    "@fontsource/ibm-plex-mono": "^5.2.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}

@@ -1,0 +1,26 @@
+/* ---------- FAQ ---------- */
+.faq__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,7vw,120px)}
+.faq__side{position:sticky;top:calc(var(--header-h) + 6vh);align-self:start}
+.faq__side .intro{margin-bottom:var(--space-6)}
+.faq__list details{border-top:1px solid var(--border)}
+.faq__list details:last-child{border-bottom:1px solid var(--border)}
+.faq__list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:var(--space-5);padding:var(--space-5) 0;font-family:var(--font-display);font-weight:300;font-size:clamp(1.2rem,1.9vw,1.7rem);line-height:1.25}
+.faq__list summary::-webkit-details-marker{display:none}
+.faq__list summary::after{content:"";flex:none;width:14px;height:14px;background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;transition:transform .5s var(--ease-out)}
+.faq__list details[open] summary::after{transform:rotate(45deg)}
+.faq__a{padding:0 0 var(--space-6);color:var(--text-2);max-width:60ch}
+@media (max-width:900px){.faq__grid{grid-template-columns:1fr}.faq__side{position:static}}
+
+/* ---------- enquiry ---------- */
+.enquiry{background:radial-gradient(70% 90% at 85% 15%,rgba(var(--accent-rgb),.14),transparent 60%),var(--bg)}
+.enquiry__grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,7vw,120px);align-items:start}
+.enquiry__copy .intro{margin-bottom:var(--space-5)}
+.trust{margin-top:var(--space-7);display:flex;flex-wrap:wrap;gap:10px 28px;font-size:.875rem;color:var(--text-2)}
+.trust li::before{content:"";display:inline-block;width:6px;height:6px;border:1px solid var(--accent-hi);transform:rotate(45deg);margin-right:10px;vertical-align:middle}
+.enquiry__panel{padding:clamp(22px,3vw,44px);border:1px solid var(--border);background:rgba(31,35,38,.7)}
+.form{display:flex;flex-direction:column;gap:var(--space-5)}
+.form__note{font-size:var(--fs-small);color:var(--text-2);min-height:1.2em}
+.form__done{padding:var(--space-7) 0}
+.form__done h3{font-size:var(--fs-h3);margin-bottom:var(--space-3)}
+.form__done p{color:var(--text-2)}
+@media (max-width:900px){.enquiry__grid{grid-template-columns:1fr}}

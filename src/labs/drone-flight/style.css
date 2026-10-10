@@ -1,0 +1,109 @@
+
+:root{--bg:#0A0B0E;--ink:#F2EEE6;--muted:#8E8A80;--line:rgba(242,238,230,.12);--gold:#A6957A;--champ:#D8CCB4;--serif:"Newsreader Variable",Georgia,serif;--sans:"Instrument Sans Variable",system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:#0A0B0E;color:var(--ink);font-family:var(--sans);font-weight:400;-webkit-font-smoothing:antialiased}
+canvas{display:block}
+#game{position:fixed;inset:0;touch-action:none}
+.hidden{display:none!important}
+.back{position:fixed;top:16px;left:16px;z-index:30;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.back:hover{color:var(--gold)}
+.mute{position:fixed;top:12px;right:12px;z-index:40;width:40px;height:40px;border-radius:11px;background:rgba(8,9,12,.55);border:1px solid var(--line);color:#fff;font-size:17px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.mute.off{opacity:.6}
+.camBtn{position:fixed;top:12px;right:60px;z-index:40;height:40px;padding:0 13px;border-radius:11px;background:rgba(8,9,12,.55);border:1px solid var(--line);color:var(--champ);font-size:11px;letter-spacing:.14em;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-family:var(--sans)}
+.camBtn:hover{border-color:var(--gold)}
+
+/* ===== HUD MINIMALNY: chevron + licznik + timer (decyzja P1) ===== */
+#hud{position:fixed;inset:0;z-index:10;pointer-events:none;font-variant-numeric:tabular-nums}
+#hud,#hud *,.stick,.mute,.camBtn{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.gates{position:absolute;top:calc(48px + env(safe-area-inset-top));left:calc(20px + env(safe-area-inset-left))}
+.gates .n{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(28px,4.4vw,44px);color:var(--gold);line-height:1;text-shadow:0 0 20px rgba(166,149,122,.45)}
+.gates .n small{font-size:.55em;color:var(--muted);font-style:normal}
+.gates .lbl{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.timerbox{position:absolute;top:calc(14px + env(safe-area-inset-top));right:calc(64px + env(safe-area-inset-right));text-align:right}
+.timerbox .t{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.6vw,38px);line-height:1;text-shadow:0 0 18px rgba(166,149,122,.45)}
+.timerbox .t small{font-size:12px;color:var(--muted)}
+.timerbox .lbl{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.warm .timerbox{opacity:.35}
+/* chevron do aktywnej bramki */
+#chev{position:absolute;left:50%;top:calc(16px + env(safe-area-inset-top));width:34px;height:34px;margin-left:-17px;transition:opacity .3s}
+#chev svg{width:100%;height:100%;filter:drop-shadow(0 0 8px rgba(166,149,122,.7))}
+/* telemetria tylko w FPV */
+.fpvtel{position:absolute;bottom:calc(20px + env(safe-area-inset-bottom));right:calc(22px + env(safe-area-inset-right));text-align:right}
+
+.fpvtel .v{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.15;color:var(--champ)}
+.fpvtel .u{font-size:9px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.msgbar{position:absolute;top:24%;left:50%;transform:translateX(-50%);text-align:center;opacity:0;transition:opacity .3s;white-space:nowrap}
+.msgbar.show{opacity:1}
+.msgbar .t{font-family:var(--serif);font-weight:600;font-size:clamp(22px,4vw,40px);color:var(--champ);text-shadow:0 0 26px rgba(166,149,122,.5)}
+.msgbar .s{color:var(--gold);font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-top:4px}
+.count{position:absolute;inset:0;z-index:12;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:clamp(80px,18vw,180px);color:var(--champ);text-shadow:0 0 50px rgba(166,149,122,.7);opacity:0;pointer-events:none}
+.count.show{opacity:1;animation:cnt .9s ease}
+@keyframes cnt{0%{transform:scale(.5);opacity:0}30%{opacity:1}100%{transform:scale(1.35);opacity:0}}
+/* flash kolizji */
+#hitfx{position:fixed;inset:0;z-index:11;pointer-events:none;background:radial-gradient(60% 60% at 50% 50%,transparent 55%,rgba(201,120,39,.35));opacity:0}
+#hitfx.on{animation:hitf .5s ease}
+@keyframes hitf{0%{opacity:1}100%{opacity:0}}
+
+/* ===== ekrany ===== */
+.screen{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:safe center;gap:20px;overflow-y:auto;background:radial-gradient(80% 80% at 50% 38%,rgba(14,15,20,.86),rgba(8,9,12,.97));backdrop-filter:blur(7px);padding:36px 24px;text-align:center}
+.screen .mono{width:52px;height:52px;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:28px;color:var(--gold)}
+.screen h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5.6vw,56px);letter-spacing:.02em}
+.screen h1 b{color:var(--gold);font-weight:700}
+.screen .sub{color:var(--muted);max-width:56ch;font-size:14.5px;line-height:1.65}
+.screen .sub b{color:var(--champ)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:15px 32px;border:1px solid rgba(166,149,122,.9);color:#0a0a0a;background:linear-gradient(115deg,#A6957A 0%,#E3C766 42%,#A6957A 60%);background-size:230% 100%;cursor:pointer;transition:background-position .55s ease,box-shadow .4s;text-decoration:none}
+.btn:hover{background-position:100% 0;box-shadow:0 0 0 1px rgba(166,149,122,.35),0 6px 24px -14px rgba(166,149,122,.5)}
+.btn.ghost{background:rgba(10,11,14,.45);border-color:rgba(242,238,230,.25);color:var(--champ)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--ink);box-shadow:none}
+.row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center}
+.keys{color:var(--muted);font-size:12.5px;letter-spacing:.04em;line-height:1.9;max-width:60ch}
+.keys b{color:var(--champ)}
+.optrow{display:flex;gap:20px;align-items:center;color:var(--muted);font-size:12px;letter-spacing:.06em}
+.optrow label{display:flex;gap:7px;align-items:center;cursor:pointer}
+.optrow input{accent-color:var(--gold)}
+.promo{font-family:var(--serif);font-weight:700;font-size:clamp(24px,4.6vw,40px);letter-spacing:.12em;color:#fff;border:1px dashed var(--gold);padding:12px 24px;display:inline-block;text-shadow:0 0 24px rgba(166,149,122,.6)}
+.padtag{display:none;color:var(--gold);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.padtag.on{display:block}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:60;background:#0A0B0E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+#loader .mono{width:52px;height:52px;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:28px;color:var(--gold)}
+#loader .pct{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--champ)}
+#loader .bar{width:min(320px,70vw);height:1px;background:rgba(242,238,230,.12)}
+#loader .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+#loader .lbl{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
+
+/* fallback kinowy (decyzja P2) */
+#nofx{display:none;position:fixed;inset:0;z-index:70;background:#0A0B0E;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:30px}
+#nofx img{width:min(720px,92vw);aspect-ratio:16/9;object-fit:cover;border:1px solid var(--line)}
+#nofx h2{font-family:var(--serif);font-weight:600;font-size:clamp(24px,4.6vw,40px)}
+#nofx p{color:var(--muted);font-size:14px;max-width:52ch}
+
+/* pauza */
+#pause{display:none;position:fixed;inset:0;z-index:50;background:rgba(8,9,12,.82);backdrop-filter:blur(8px);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:30px}
+#pause.on{display:flex}
+#pause h2{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5vw,46px)}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:55;background:rgba(14,15,20,.9);border:1px solid var(--line);color:var(--champ);font-size:12.5px;letter-spacing:.08em;padding:11px 20px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+
+/* landscape-only mobile (decyzja P6) */
+#rotate{display:none;position:fixed;inset:0;z-index:90;background:#0A0B0E;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:30px}
+#rotate .ph{width:54px;height:90px;border:2px solid var(--gold);border-radius:10px;animation:rot 1.8s ease infinite}
+@keyframes rot{0%,25%{transform:rotate(0)}60%,100%{transform:rotate(90deg)}}
+#rotate .t{font-family:var(--serif);font-size:24px;color:var(--champ)}
+@media(hover:none) and (orientation:portrait){body.playing #rotate{display:flex}}
+
+/* sterowanie "celownik": kursor/kciuk = kierunek (jak w Uncrashed casual) */
+body.playing #game{cursor:none}
+#cross{position:fixed;z-index:14;width:34px;height:34px;margin:-17px 0 0 -17px;pointer-events:none;display:none}
+body.playing #cross{display:block}
+#cross::before{content:"";position:absolute;inset:0;border:1.5px solid rgba(105,255,138,.85);border-radius:50%;box-shadow:0 0 12px rgba(105,255,138,.5)}
+#cross::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;background:#69ff8a;border-radius:50%}
+#center{position:fixed;left:50%;top:50%;z-index:13;width:10px;height:10px;margin:-5px;pointer-events:none;display:none;border:1px solid rgba(242,238,230,.35);border-radius:50%}
+body.playing #center{display:block}
+/* mobile: prawy kciuk steruje (wirtualny celownik), lewa krawędź = BOOST */
+#boostBtn{position:fixed;left:calc(18px + env(safe-area-inset-left));bottom:calc(18px + env(safe-area-inset-bottom));z-index:15;width:92px;height:92px;border-radius:50%;border:1px solid rgba(166,149,122,.5);background:rgba(166,149,122,.14);color:var(--gold);font-family:var(--sans);font-weight:800;font-size:12px;letter-spacing:.14em;display:none;touch-action:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#boostBtn:active{background:rgba(166,149,122,.42);color:#0a0a0a}
+@media(hover:none){body.playing #boostBtn{display:block}}
+#ctxlost{display:none;position:fixed;inset:0;z-index:80;background:#0A0B0E;color:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:30px}

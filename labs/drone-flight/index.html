@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>STELE Lab — concept FPV flight</title>
+<meta name="description" content="An illustrative FPV drone-flight mini-game built around the fictional STELE architecture concept. All rewards are local demo achievements, not offers or benefits.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17191B">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<canvas id="game"></canvas>
+<a class="back" href="/">← STELE</a>
+<button id="muteBtn" class="mute" aria-label="Dźwięk">🔊</button>
+<button id="camBtn" class="camBtn hidden" aria-label="Kamera" data-t="cam3">KAMERA · TPP</button>
+
+<div id="loader"><div class="mono">A</div><div class="pct" id="ldPct">0%</div><div class="bar"><i id="ldBar"></i></div><div class="lbl" data-t="ld">Przygotowujemy drona</div></div>
+
+<div id="hud" class="hidden">
+  <div class="gates"><div class="n"><span id="gateN">00</span><small> / <span id="gateT">12</span></small></div><div class="lbl" id="gateLbl" data-t="gates">Bramki</div></div>
+  <div class="timerbox"><div class="t" id="curTime">90.0<small> s</small></div><div class="lbl" data-t="time">Czas</div></div>
+  <div id="chev"><svg viewBox="0 0 34 34"><path d="M17 4 L28 26 L17 20 L6 26 Z" fill="#A6957A"/></svg></div>
+  <div class="fpvtel"><div class="v" id="telSpd">0</div><div class="u">km/h</div><div class="v" id="telAlt" style="margin-top:6px">0</div><div class="u" data-t="alt">m n.p.w.</div></div>
+  <div class="msgbar" id="msgbar"><div class="t" id="msgT"></div><div class="s" id="msgS"></div></div>
+</div>
+<div class="count" id="count"></div>
+<div id="hitfx"></div>
+
+<div id="cross"></div><div id="center"></div>
+<button id="boostBtn" data-t="boost">BOOST</button>
+
+<div class="screen" id="selScreen">
+  <div class="mono">A</div>
+  <h1 data-t="title">Lot dronem <b>FPV</b> o złotej godzinie</h1>
+  <p class="sub" data-t="intro">Przejdź koncepcyjną trasę FPV inspirowaną architekturą STELE. Najpierw <b>rozgrzewka</b> (2 bramki bez czasu), potem wyścig: <b>12 złotych bramek w 90 sekund</b>. Nagroda: lokalny kod osiągnięcia demo.</p>
+  <div class="row"><button class="btn" id="startBtn" data-t="start">Startuj →</button></div>
+  <p class="keys" id="keysDesk"><b data-t="k1">Dron leci sam.</b> <span data-t="k1v">Prowadź go celownikiem myszy po zielonej linii</span> · <b>W</b> <span data-t="k2v">boost</span> · <b>S</b> <span data-t="k3v">wolniej</span> · <b data-t="k4">strzałki</b> <span data-t="k4v">alternatywa</span> · <b>C</b> <span data-t="k6v">kamera FPV</span> · <b>Esc</b> <span data-t="k7v">pauza</span></p>
+  <p class="keys hidden" id="keysPad"><b data-t="p1">Pad:</b> <span data-t="p1v">lewy drążek = gaz + obrót, prawy = przód + bok (Mode 2)</span></p>
+  <div class="optrow"><label><input type="checkbox" id="stableCam"> <span data-t="stable">Stabilna kamera (mniej bujania)</span></label></div>
+  <div class="padtag" id="padTag" data-t="padon">🎮 Kontroler wykryty</div>
+</div>
+
+<div class="screen hidden" id="endScreen">
+  <h1 id="endTitle">Lądowanie!</h1>
+  <p class="sub" id="endSub"></p>
+  <div id="codeWrap" class="hidden" style="display:flex;flex-direction:column;gap:14px;align-items:center">
+    <div class="promo">STELE-FLIGHT-DEMO</div>
+    <p class="sub" data-t="claim_info">To lokalne osiągnięcie demonstracyjne — nie jest kuponem, rezerwacją ani obietnicą korzyści.</p>
+    <a class="btn" id="claimBtn" href="#" data-t="claim_btn">Wróć do koncepcji STELE →</a>
+  </div>
+  <div class="row">
+    <a class="btn ghost" href="/#tower" data-t="see_apts">Zobacz apartamenty</a>
+    <button class="btn ghost" id="shareBtn" data-t="share">Udostępnij wynik</button>
+    <button class="btn ghost" id="againBtn" data-t="again">Jeszcze raz</button>
+  </div>
+</div>
+
+<div id="pause"><h2 data-t="paused">Pauza</h2><p class="keys" data-t="pausesub">Esc / przycisk = wznowienie</p><button class="btn" id="resumeBtn" data-t="resume">Wznów lot</button></div>
+<div class="toast" id="toast"></div>
+
+<div id="nofx">
+  <h2 data-t="nofx_h">Ten lot wymaga mocniejszego sprzętu</h2>
+  <p data-t="nofx_p">Twoja przeglądarka nie obsługuje WebGPU/WebGL2. Zobacz przelot z pokładu naszego drona:</p>
+  <img src="/assets/hero/hero-main.webp" alt="Referencyjna fasada architektoniczna" loading="lazy">
+  <a class="btn" href="/" data-t="nofx_cta">Wróć do STELE →</a>
+</div>
+
+<div id="rotate"><div class="ph"></div><div class="t" data-t="rot">Obróć telefon poziomo</div></div>
+<div id="ctxlost"><div style="font-family:var(--serif);font-size:26px" data-t="ctx1">Podgląd 3D został przerwany</div><div style="color:var(--muted);font-size:14px" data-t="ctx2">Odśwież stronę, aby wrócić do lotu.</div><button class="btn" onclick="location.reload()" data-t="ctx3">Odśwież</button></div>
+<script type="module" src="/src/labs/drone-flight/main.js"></script>
+</body>
+</html>
