@@ -21,9 +21,9 @@ b,strong{font-weight:600}
 .skip-link:focus{top:12px}
 .mono{font-family:var(--font-mono);font-size:var(--fs-mono);letter-spacing:var(--track-mono);text-transform:uppercase}
 
-/* section tones */
-.section--ivory{background:var(--ivory);color:var(--ink);--text:var(--ink);--text-2:var(--ink-2);--border:var(--ink-border);--accent:var(--ink-accent)}
-.section--stone{background:var(--stone);color:var(--ink);--text:var(--ink);--text-2:var(--ink-2);--border:var(--ink-border);--accent:var(--ink-accent)}
+/* Main-page section tones: keep every chapter inside the graphite / mineral dark palette. */
+.section--graphite{background:var(--surface)}
+.section--mineral{background:var(--surface-2)}
 .section--glass{background:var(--surface)}
 
 /* plate label: "N° 02 ── Architecture" - the brand's section-label language */
@@ -44,7 +44,6 @@ b,strong{font-weight:600}
 .btn--line{border-color:var(--border-strong);color:var(--text)}
 .btn--line::before{background:var(--text)}
 .btn--line:hover,.btn--line:focus-visible{color:var(--bg);border-color:var(--text)}
-.section--ivory .btn--line:hover,.section--ivory .btn--line:focus-visible{color:var(--ivory)}
 .btn--text{padding-inline:0;min-height:44px;border-radius:0}
 .btn--text::before{display:none}
 .btn__arrow{width:20px;height:10px;transition:transform .5s var(--ease-out)}
@@ -84,8 +83,6 @@ b,strong{font-weight:600}
     linear-gradient(180deg,rgba(255,255,255,.03),transparent 40%),
     repeating-linear-gradient(0deg,transparent 0 31px,rgba(var(--accent-rgb),.12) 31px 32px),
     linear-gradient(155deg,#2a2f33,#1b1e20 70%)}
-.section--ivory .media__ph,.section--stone .media__ph{background:
-    repeating-linear-gradient(0deg,transparent 0 31px,rgba(27,29,31,.1) 31px 32px),linear-gradient(155deg,#dcd7ca,#c4bfb1 80%)}
 .media__ph::before{content:"";position:absolute;left:50%;top:14%;bottom:0;width:22%;transform:translateX(-50%);border:1px solid rgba(var(--accent-rgb),.28);border-bottom:0;border-radius:2px 2px 0 0}
 .media__slot,.media__ratio{position:relative;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2)}
 .media__ratio{opacity:.7}

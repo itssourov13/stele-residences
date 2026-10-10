@@ -43,7 +43,7 @@ export const ASSETS = {
     living: img('interiors/living.webp', { ratio: '16/11', slot: 'Interior · living', alt: alt('Referencyjna aranżacja salonu z drewnem i kamieniem', 'Living-room reference with wood and stone') }),
     kitchen: img('interiors/kitchen.webp', { ratio: '16/11', slot: 'Interior · kitchen', alt: alt('Referencyjny salon z otwartą kuchnią — bez specyfikacji STELE', 'Open-kitchen reference — not a STELE specification') }),
     bath: img('interiors/bath.webp', { ratio: '16/11', slot: 'Interior · bathroom', alt: alt('Referencyjna aranżacja łazienki z kamieniem i drewnem', 'Bathroom reference with stone and wood') }),
-    terrace: img('interiors/terrace.webp', { ratio: '16/11', slot: 'Interior · terrace', alt: alt('Referencyjny budynek mieszkalny z balkonami', 'Residential-building reference with balconies') }),
+    terrace: img('interiors/terrace.webp', { ratio: '16/11', slot: 'Interior · terrace', focal: '50% 54%', alt: alt('Referencyjny salon z panoramicznym przeszkleniem i zielenią', 'Living-room reference with panoramic glazing and greenery') }),
     oak: img('interiors/material-oak.webp', { ratio: '1/1', slot: 'Material · smoked oak', alt: alt('Dąb wędzony, zbliżenie', 'Smoked oak, close-up') }),
     travertine: img('interiors/material-travertine.webp', { ratio: '1/1', slot: 'Material · travertine', alt: alt('Trawertyn, zbliżenie', 'Travertine, close-up') }),
     glass: img('interiors/material-glass.webp', { ratio: '1/1', slot: 'Material · smoked glass', alt: alt('Szkło dymione, zbliżenie', 'Smoked glass, close-up') }),
@@ -55,7 +55,7 @@ export const ASSETS = {
     courtyard: img('amenities/courtyard.webp', { ratio: '4/5', slot: 'Amenity · courtyard', alt: alt('Referencyjny zielony dziedziniec', 'Green courtyard reference') }),
     lounge: img('amenities/sky-lounge.webp', { ratio: '16/10', slot: 'Amenity · sky lounge', alt: alt('Referencyjne wnętrze lobby i strefy wypoczynku', 'Lobby and lounge interior reference') }),
     concierge: img('amenities/concierge.webp', { ratio: '4/5', slot: 'Amenity · lobby', alt: alt('Referencyjne lobby z recepcją', 'Reception-lobby reference') }),
-    garage: img('amenities/garage.webp', { ratio: '16/10', slot: 'Amenity · garage', alt: alt('Referencyjna fasada miejska — garaż nie jest przedstawiony', 'Urban facade reference — no garage is depicted') })
+    garage: img('amenities/garage.webp', { ratio: '16/10', slot: 'Amenity · garage', alt: alt('Referencyjny współczesny garaż podziemny', 'Contemporary underground-parking reference') })
   },
   lifestyle: {
     morning: img('lifestyle/morning.webp', { ratio: '4/5', slot: 'Lifestyle · 06:30', alt: alt('Zieleń jako inspiracja dla sekwencji porannej', 'Green canopy used as a morning lifestyle mood reference') }),
@@ -69,9 +69,10 @@ export const ASSETS = {
     backdrop: img('location/backdrop.webp', { ratio: '16/9', slot: 'Location · backdrop', alt: alt('', '') })
   },
   gallery: [
-    { asset: 'hero.main', span: 'tall' }, { asset: 'interiors.living', span: 'wide' }, { asset: 'amenities.pool', span: 'tall' },
-    { asset: 'architecture.crown', span: 'wide' }, { asset: 'interiors.terrace', span: 'wide' }, { asset: 'amenities.courtyard', span: 'tall' },
-    { asset: 'lifestyle.evening', span: 'tall' }, { asset: 'interiors.bath', span: 'wide' }
+    { asset: 'interiors.living', span: 'tall' }, { asset: 'interiors.kitchen', span: 'wide' },
+    { asset: 'interiors.bath', span: 'wide' }, { asset: 'interiors.terrace', span: 'tall' },
+    { asset: 'interiors.oak', span: 'wide' }, { asset: 'interiors.travertine', span: 'wide' },
+    { asset: 'interiors.glass', span: 'tall' }, { asset: 'interiors.bronze', span: 'wide' }
   ]
 };
 

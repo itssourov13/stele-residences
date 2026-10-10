@@ -8,7 +8,7 @@ import { $, $$, RM } from '../core/env.js';
 import { gsap } from '../motion/scroll.js';
 
 export function render() {
-  return `<section class="arch section section--ivory" id="architecture" aria-labelledby="archTitle">
+  return `<section class="arch section section--graphite" id="architecture" aria-labelledby="archTitle">
   <div class="wrap">
     ${SectionIntro({ plate: C.plate, label: C.label, title: C.title, lede: C.lede, headingId: 'archTitle' })}
     <div class="arch__grid">
